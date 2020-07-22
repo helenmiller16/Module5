@@ -22,13 +22,55 @@ There are ultimately 3 goals to this lab:
 
 1. Problem 1 - Visualization
 * Problem 1a - We wish to plot the author texts as well as the words via a 2D scatterplot.  Which method would be best to use?  Why?
+  * PCA because it allows you to perform dimredux on both features and observations 
 * Problem 1b - Apply PCA to visualize the author texts.  Explain the results.  
+
+```{r}
+pc <- princomp(author)
+pc1 <- pc$scores[, 1]
+pc2 <- pc$scores[, 2]
+plot(pc1, pc2, pch = 2, cex = .5, col = as.factor(rownames(author)))
+```
+
+
 * Problem 1c - Apply MDS to visualize the author texts.  Interpret the results.  
+```{r}
+Dmat = dist(author, method = "canberra") #Manhattan (L1) Distance
+mdsres = cmdscale(Dmat,k=10)
+
+i = 1; j = 2;
+plot(mdsres[,i],mdsres[,j], main = "MDS for texts", col = as.factor(rownames(author)))
+# text(mdsres[,i],mdsres[,j],rownames(dat38),col=rownames(dat38))
+```
 * Problem 1d - Can you use MDS to help determine which distance is appropriate for this data?  Which one is best and why?  
-* Problem 1e - Apply MDS with your chosen distance to visualize the words.  Interpret the results.  
+* Problem 1e - Apply MDS with your chosen distance to visualize the words.  Interpret the results. 
+
+```{r}
+Dmat = dist(t(author), method = "canberra") #Manhattan (L1) Distance
+mdsres = cmdscale(Dmat,k=2)
+
+i = 1; j = 2;
+plot(mdsres[,i],mdsres[,j], main = "MDS for words", type = "n")
+text(mdsres[, i], mdsres[, j], colnames(author))
+
+```
 
 2. Problem 2 - K-means
-* Problem 2a - Apply K-means with K=4 to this data.  
+* Problem 2a - Apply K-means with K=4 to this data. 
+```{r}
+Data = as.data.frame(author)
+k = 4
+km = kmeans(Data,centers=k)
+gd = data.frame(km$centers)
+gd$label = rownames(gd)
+colnames(gd) = c("x1","x2","label")
+Data$PredLabel = factor(km$cluster)
+ggplot() + 
+    geom_point(data = Data,mapping = aes(x = pc1,y = pc2,color = PredLabel), pch = 16)  + 
+    geom_point(gd,mapping = aes(x = pc1,y = pc2,color= factor(label)),size = 4) 
+
+
+```
 * Problem 2b - How well does K-mean do at separating the authors?
 * Problem 2c - Is K-means an appropriate clustering algorithm for this data?  Why or Why not?
 

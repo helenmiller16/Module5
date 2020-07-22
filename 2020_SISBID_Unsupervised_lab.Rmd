@@ -31,14 +31,61 @@ output:
 ## Problem 1 - Dimension reduction 
 
 1a - Apply PCA, NMF, ICA and MDS, UMAP, and tSNE to this dataset. Compare and contrast the results using these methods.  
+
+* Basal-like group seems toseparate from other groups in all clustering techniques
+* HER2-enriched separated in some techniques
+* Luminal A and Luminal B similar
+
 1b - Relate the dimension reduction results with the clinical data. Is any clinical information reflected in the lower dimensional spaces?
+
+```{r}
+Cols=function(vec){cols=rainbow(length(unique(vec)))
+                   return(cols[as.numeric(as.factor(vec))])}
+
+sv = svd(scale(gdat,center=TRUE,scale=FALSE))
+V = sv$v
+Z = gdat%*%V
+
+K = 3
+pclabs = c("PC1","PC2","PC3","PC4")
+par(mfrow=c(1,K))
+for(i in 1:K){
+  j = i+1
+  plot(Z[,i],Z[,j],pch=16,xlab=pclabs[i],ylab=pclabs[j],col=Cols(cdat$Subtype))
+}
+legend(-45,0,pch=16,col=rainbow(5),levels(cdat$Subtype))
+
+for(i in 1:K){
+  j = i+1
+  plot(Z[,i],Z[,j],pch=16,xlab=pclabs[i],ylab=pclabs[j],col=Cols(cdat$`ER-Status`))
+}
+legend(-45,0,pch=16,col=rainbow(5),levels(cdat$`ER-Status`))
+
+# Let's see what features are associated with PC1
+pc <- princomp(gdat)
+
+loading1 <- V[, 1]
+loadingOrder <- order(loading1)
+loadingSorted <- loading1[order(loading1)]
+loadingLabels <- colnames(gdat)[loadingOrder]
+
+barplot(loadingSorted[1:10],cex.names=.6,main="PC 1 Loadings", )
+loadingLabels[1:10]
+```
 
 1c - Overall, which dimension reduction method do you recommend for this data set and why?
 
+* For visualization and separating groups, UMAP worked best. 
+* PCA is best for exploring and understanding what's going on. 
+* MDS and ICA didn't add anything useful
 
 ## Problem 2 - Clustering 
 
 2a - Apply various clustering algorithms such as K-means (explore different K), hierarchical clustering (explore different linkages), NMF, and biclustering. Compare the clustering results using these methods.
+
+```{r cluster}
+
+```
 
 2b - Relate the clustering results with the clinical data. Can the clustering algorithm recover some of the clinical information such as cancer subtypes?
 
@@ -107,10 +154,10 @@ dim(cdat)
 table(cdat$Subtype)
 table(cdat$ER)
 table(cdat$PR)
-table(cdat$HER2)
-table(cdat$Node)
-table(cdat$Metastasis)
-table(cdat$ER,cdat$PR)
+table(cdat$HER2) # hormonal receptor
+table(cdat$Node) # number of lymph nodes with metastisis
+table(cdat$Metastasis) # yes or no
+table(cdat$ER,cdat$PR) # Progesterine receptor, (receptors)
 
 ```
 
@@ -158,6 +205,12 @@ for(i in 1:K){
   plot(Z[,i],Z[,j],pch=16,xlab=pclabs[i],ylab=pclabs[j],col=Cols(cdat$Subtype))
 }
 legend(-45,0,pch=16,col=rainbow(5),levels(cdat$Subtype))
+
+for(i in 1:K){
+  j = i+1
+  plot(Z[,i],Z[,j],pch=16,xlab=pclabs[i],ylab=pclabs[j],col=Cols(cdat$`ER-Status`))
+}
+legend(-45,0,pch=16,col=rainbow(5),levels(cdat$`ER-Status`))
 ```
 
 Pairs Plot
@@ -176,7 +229,7 @@ MDS
 ```{r, echo = TRUE}
 
 Dmat = dist(gdat,method="maximum")
-mdsres = cmdscale(Dmat,k=2)
+mdsres = cmdscale(Dmat,k=10)
 plot(mdsres[,1],mdsres[,2],pch=16,col=Cols(cdat$Subtype), main = "Dimension Reduction MDS")
 legend(-30,20,pch=16,col=rainbow(5),levels(cdat$Subtype))
 
@@ -205,8 +258,8 @@ legend(-1,2.8,pch=16,col=rainbow(5),levels(cdat$Subtype))
 UMAP
 ```{r, echo = TRUE}
 gdat.umap = umap(gdat)
-plot(gdat.umap$layout[,1], y =gdat.umap$layout[,2], type = "n", main = "UMAP", xlab = "UMAP1", ylab = "UMAP2")
-text(gdat.umap$layout[,1], y =gdat.umap$layout[,2], type = "n", cdat$Subtype, col=Cols(cdat$Subtype), cex = .7 )
+plot(gdat.umap$layout[,1], y =gdat.umap$layout[,2], main = "UMAP", xlab = "UMAP1", ylab = "UMAP2", col = Cols(cdat$Subtype))
+# text(gdat.umap$layout[,1], y =gdat.umap$layout[,2], type = "n", cdat$Subtype, col=Cols(cdat$Subtype), cex = .7 )
 
 ```
 

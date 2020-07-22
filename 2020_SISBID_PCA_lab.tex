@@ -1,0 +1,685 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{article}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\hypersetup{
+  pdftitle={2020 SISBID Dimension Reduction Lab},
+  pdfauthor={Genevera I. Allen, Yufeng Liu, Hui Shen, Camille Little},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+\urlstyle{same} % disable monospaced font for URLs
+\usepackage[margin=1in]{geometry}
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{graphicx,grffile}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+
+\title{2020 SISBID Dimension Reduction Lab}
+\author{Genevera I. Allen, Yufeng Liu, Hui Shen, Camille Little}
+\date{7/20/2020}
+
+\begin{document}
+\maketitle
+
+\hypertarget{quick-pca-demo-using-college-data}{%
+\section{Quick PCA Demo Using College
+Data}\label{quick-pca-demo-using-college-data}}
+
+Load in Packages
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(ISLR)}
+\KeywordTok{library}\NormalTok{(ggplot2)}
+\KeywordTok{library}\NormalTok{(GGally)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Registered S3 method overwritten by 'GGally':
+##   method from   
+##   +.gg   ggplot2
+\end{verbatim}
+
+Load Digits Data
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{#code for digits - ALL}
+\KeywordTok{rm}\NormalTok{(}\DataTypeTok{list=}\KeywordTok{ls}\NormalTok{())}
+\KeywordTok{load}\NormalTok{(}\StringTok{"UnsupL_SISBID_2020.Rdata"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{data}\NormalTok{(College)}
+\NormalTok{cdat =}\StringTok{ }\NormalTok{College[,}\DecValTok{2}\OperatorTok{:}\DecValTok{18}\NormalTok{]}
+\KeywordTok{dim}\NormalTok{(cdat)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 777  17
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{names}\NormalTok{(cdat)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [1] "Apps"        "Accept"      "Enroll"      "Top10perc"   "Top25perc"  
+##  [6] "F.Undergrad" "P.Undergrad" "Outstate"    "Room.Board"  "Books"      
+## [11] "Personal"    "PhD"         "Terminal"    "S.F.Ratio"   "perc.alumni"
+## [16] "Expend"      "Grad.Rate"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{pc =}\StringTok{ }\KeywordTok{princomp}\NormalTok{(cdat) }\CommentTok{#default - centers and scales}
+
+\CommentTok{#Go back and display these plots side by side}
+
+\KeywordTok{biplot}\NormalTok{(pc,}\DataTypeTok{cex=}\NormalTok{.}\DecValTok{7}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning in arrows(0, 0, y[, 1L] * 0.8, y[, 2L] * 0.8, col = col[2L], length =
+## arrow.len): zero-length arrow is of indeterminate angle and so skipped
+\end{verbatim}
+
+\includegraphics{2020_SISBID_PCA_lab_files/figure-latex/unnamed-chunk-4-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{screeplot}\NormalTok{(pc)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{2020_SISBID_PCA_lab_files/figure-latex/unnamed-chunk-4-2.pdf}
+
+scatter plots - patterns among observations
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{PC1 <-}\StringTok{ }\KeywordTok{as.matrix}\NormalTok{(}\DataTypeTok{x=}\NormalTok{pc}\OperatorTok{$}\NormalTok{scores[,}\DecValTok{1}\NormalTok{]) }
+\NormalTok{PC2 <-}\StringTok{ }\KeywordTok{as.matrix}\NormalTok{(pc}\OperatorTok{$}\NormalTok{scores[,}\DecValTok{2}\NormalTok{])}
+
+\NormalTok{PC <-}\StringTok{ }\KeywordTok{data.frame}\NormalTok{(}\DataTypeTok{State =} \KeywordTok{row.names}\NormalTok{(cdat), PC1, PC2)}
+\KeywordTok{ggplot}\NormalTok{(PC, }\KeywordTok{aes}\NormalTok{(PC1, PC2)) }\OperatorTok{+}\StringTok{ }
+\StringTok{  }\KeywordTok{geom_text}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{label =}\NormalTok{ State), }\DataTypeTok{size =} \DecValTok{3}\NormalTok{) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{xlab}\NormalTok{(}\StringTok{"PC1"}\NormalTok{) }\OperatorTok{+}\StringTok{ }
+\StringTok{  }\KeywordTok{ylab}\NormalTok{(}\StringTok{"PC2"}\NormalTok{) }\OperatorTok{+}\StringTok{ }
+\StringTok{  }\KeywordTok{ggtitle}\NormalTok{(}\StringTok{"First Two Principal Components of College Data"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{2020_SISBID_PCA_lab_files/figure-latex/unnamed-chunk-5-1.pdf}
+
+Pairs Plot
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{comp_labels<-}\KeywordTok{c}\NormalTok{(}\StringTok{"PC1"}\NormalTok{,}\StringTok{"PC2"}\NormalTok{,}\StringTok{"PC3"}\NormalTok{,}\StringTok{"PC4"}\NormalTok{, }\StringTok{"PC5"}\NormalTok{)}
+\KeywordTok{pairs}\NormalTok{(pc}\OperatorTok{$}\NormalTok{scores[,}\DecValTok{1}\OperatorTok{:}\DecValTok{5}\NormalTok{], }\DataTypeTok{labels =}\NormalTok{ comp_labels, }\DataTypeTok{main =} \StringTok{"Pairs of PC's for College Data"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{2020_SISBID_PCA_lab_files/figure-latex/unnamed-chunk-6-1.pdf}
+
+Loadings - variables that contribute to these patterns
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{par}\NormalTok{(}\DataTypeTok{mfrow=}\KeywordTok{c}\NormalTok{(}\DecValTok{2}\NormalTok{,}\DecValTok{1}\NormalTok{))}
+\KeywordTok{barplot}\NormalTok{(pc}\OperatorTok{$}\NormalTok{loadings[,}\DecValTok{1}\NormalTok{],}\DataTypeTok{cex.names=}\NormalTok{.}\DecValTok{6}\NormalTok{,}\DataTypeTok{main=}\StringTok{"PC 1 Loadings"}\NormalTok{)}
+\KeywordTok{barplot}\NormalTok{(pc}\OperatorTok{$}\NormalTok{loadings[,}\DecValTok{2}\NormalTok{],}\DataTypeTok{cex.names=}\NormalTok{.}\DecValTok{6}\NormalTok{,}\DataTypeTok{main=}\StringTok{"PC 2 Loadings"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{2020_SISBID_PCA_lab_files/figure-latex/unnamed-chunk-7-1.pdf}
+
+Variance explained
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{varex =}\StringTok{ }\DecValTok{100}\OperatorTok{*}\NormalTok{pc}\OperatorTok{$}\NormalTok{sdev}\OperatorTok{^}\DecValTok{2}\OperatorTok{/}\KeywordTok{sum}\NormalTok{(pc}\OperatorTok{$}\NormalTok{sdev}\OperatorTok{^}\DecValTok{2}\NormalTok{)}
+\KeywordTok{par}\NormalTok{(}\DataTypeTok{mfrow=}\KeywordTok{c}\NormalTok{(}\DecValTok{2}\NormalTok{,}\DecValTok{1}\NormalTok{))}
+\KeywordTok{screeplot}\NormalTok{(pc)}
+\KeywordTok{plot}\NormalTok{(varex,}\DataTypeTok{type=}\StringTok{"l"}\NormalTok{,}\DataTypeTok{ylab=}\StringTok{"% Variance Explained"}\NormalTok{,}\DataTypeTok{xlab=}\StringTok{"Component"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{2020_SISBID_PCA_lab_files/figure-latex/unnamed-chunk-8-1.pdf}
+
+Cumulative variance explained
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{#cumulative variance explained}
+\NormalTok{cvarex =}\StringTok{ }\OtherTok{NULL}
+\ControlFlowTok{for}\NormalTok{(i }\ControlFlowTok{in} \DecValTok{1}\OperatorTok{:}\KeywordTok{ncol}\NormalTok{(cdat))\{}
+\NormalTok{  cvarex[i] =}\StringTok{ }\KeywordTok{sum}\NormalTok{(varex[}\DecValTok{1}\OperatorTok{:}\NormalTok{i])}
+\NormalTok{\}}
+\KeywordTok{plot}\NormalTok{(cvarex,}\DataTypeTok{type=}\StringTok{"l"}\NormalTok{,}\DataTypeTok{ylab=}\StringTok{"Cumulative Variance Explained"}\NormalTok{,}\DataTypeTok{xlab=}\StringTok{"Component"}\NormalTok{, }\DataTypeTok{main =} \StringTok{"Principal Component V. Variance Explained"}\NormalTok{ )}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{2020_SISBID_PCA_lab_files/figure-latex/unnamed-chunk-9-1.pdf}
+
+\hypertarget{sparse-pca}{%
+\section{Sparse PCA}\label{sparse-pca}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(PMA)}
+
+\NormalTok{spc =}\StringTok{ }\KeywordTok{SPC}\NormalTok{(}\KeywordTok{scale}\NormalTok{(cdat),}\DataTypeTok{sumabsv=}\DecValTok{2}\NormalTok{,}\DataTypeTok{K=}\DecValTok{3}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 1234567891011121314151617181920
+## 1234567891011
+## 1234567891011121314151617181920
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{spcL =}\StringTok{ }\NormalTok{spc}\OperatorTok{$}\NormalTok{v}
+\KeywordTok{rownames}\NormalTok{(spcL) =}\StringTok{ }\KeywordTok{names}\NormalTok{(cdat)}
+\end{Highlighting}
+\end{Shaded}
+
+Scatterplots of Sparse PCs
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{i =}\StringTok{ }\DecValTok{1}\NormalTok{; j =}\StringTok{ }\DecValTok{2}\NormalTok{;}
+\KeywordTok{plot}\NormalTok{(spc}\OperatorTok{$}\NormalTok{u[,i],spc}\OperatorTok{$}\NormalTok{u[,j],}\DataTypeTok{pch=}\DecValTok{16}\NormalTok{,}\DataTypeTok{cex=}\NormalTok{.}\DecValTok{2}\NormalTok{, }\DataTypeTok{xlab =} \StringTok{"PC 1"}\NormalTok{, }\DataTypeTok{ylab =} \StringTok{"PC 2"}\NormalTok{, }\DataTypeTok{main =} \StringTok{"Scatterplot of Sparse PC's "}\NormalTok{)}
+\KeywordTok{text}\NormalTok{(spc}\OperatorTok{$}\NormalTok{u[,i],spc}\OperatorTok{$}\NormalTok{u[,j],}\KeywordTok{rownames}\NormalTok{(cdat),}\DataTypeTok{cex=}\NormalTok{.}\DecValTok{6}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{2020_SISBID_PCA_lab_files/figure-latex/unnamed-chunk-11-1.pdf}
+
+Loadings
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{par}\NormalTok{(}\DataTypeTok{mfrow=}\KeywordTok{c}\NormalTok{(}\DecValTok{2}\NormalTok{,}\DecValTok{1}\NormalTok{))}
+\KeywordTok{barplot}\NormalTok{(spc}\OperatorTok{$}\NormalTok{v[,}\DecValTok{1}\NormalTok{],}\DataTypeTok{names=}\KeywordTok{names}\NormalTok{(cdat),}\DataTypeTok{cex.names=}\NormalTok{.}\DecValTok{6}\NormalTok{,}\DataTypeTok{main=}\StringTok{"SPC 1 Loadings"}\NormalTok{)}
+\KeywordTok{barplot}\NormalTok{(spc}\OperatorTok{$}\NormalTok{v[,}\DecValTok{2}\NormalTok{],}\DataTypeTok{names=}\KeywordTok{names}\NormalTok{(cdat),}\DataTypeTok{cex.names=}\NormalTok{.}\DecValTok{6}\NormalTok{,}\DataTypeTok{main=}\StringTok{"SPC 2 Loadings"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{2020_SISBID_PCA_lab_files/figure-latex/unnamed-chunk-12-1.pdf}
+
+\hypertarget{try-princomp-function-for-digits-3-and-8}{%
+\section{Try Princomp Function for Digits 3 and
+8}\label{try-princomp-function-for-digits-3-and-8}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{dat38 =}\StringTok{ }\KeywordTok{rbind}\NormalTok{(digits[}\KeywordTok{which}\NormalTok{(}\KeywordTok{rownames}\NormalTok{(digits)}\OperatorTok{==}\DecValTok{3}\NormalTok{),],digits[}\KeywordTok{which}\NormalTok{(}\KeywordTok{rownames}\NormalTok{(digits)}\OperatorTok{==}\DecValTok{8}\NormalTok{),])}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{pc =}\StringTok{ }\KeywordTok{princomp}\NormalTok{(dat38) }\CommentTok{#default - centers and scales}
+\end{Highlighting}
+\end{Shaded}
+
+Pairs plot Using ggpairs
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{PC1 <-}\StringTok{ }\KeywordTok{as.matrix}\NormalTok{(}\DataTypeTok{x=}\NormalTok{pc}\OperatorTok{$}\NormalTok{scores[,}\DecValTok{1}\NormalTok{]) }
+\NormalTok{PC2 <-}\StringTok{ }\KeywordTok{as.matrix}\NormalTok{(pc}\OperatorTok{$}\NormalTok{scores[,}\DecValTok{2}\NormalTok{])}
+\NormalTok{PC3 <-}\StringTok{ }\KeywordTok{as.matrix}\NormalTok{(pc}\OperatorTok{$}\NormalTok{scores[,}\DecValTok{3}\NormalTok{])}
+\NormalTok{PC4 <-}\StringTok{ }\KeywordTok{as.matrix}\NormalTok{(pc}\OperatorTok{$}\NormalTok{scores[,}\DecValTok{4}\NormalTok{])}
+\NormalTok{PC5<-}\KeywordTok{as.matrix}\NormalTok{(pc}\OperatorTok{$}\NormalTok{scores[,}\DecValTok{5}\NormalTok{])}
+
+\NormalTok{pc.df.digits <-}\StringTok{ }\KeywordTok{data.frame}\NormalTok{(}\DataTypeTok{digit_name =} \KeywordTok{row.names}\NormalTok{(dat38), PC1, PC2,PC3, PC4, PC5)}
+
+\KeywordTok{ggpairs}\NormalTok{(pc.df.digits, }\DataTypeTok{mapping =} \KeywordTok{aes}\NormalTok{(}\DataTypeTok{color =}\NormalTok{ digit_name))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
+## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
+## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
+## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
+## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
+\end{verbatim}
+
+\includegraphics{2020_SISBID_PCA_lab_files/figure-latex/unnamed-chunk-15-1.pdf}
+
+PC Loadings
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{par}\NormalTok{(}\DataTypeTok{mfrow=}\KeywordTok{c}\NormalTok{(}\DecValTok{3}\NormalTok{,}\DecValTok{5}\NormalTok{),}\DataTypeTok{mar=}\KeywordTok{c}\NormalTok{(.}\DecValTok{1}\NormalTok{,.}\DecValTok{1}\NormalTok{,.}\DecValTok{1}\NormalTok{,.}\DecValTok{1}\NormalTok{))}
+\ControlFlowTok{for}\NormalTok{(i }\ControlFlowTok{in} \DecValTok{1}\OperatorTok{:}\DecValTok{15}\NormalTok{)\{}
+  \KeywordTok{imagedigit}\NormalTok{(pc}\OperatorTok{$}\NormalTok{loadings[,i])}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{2020_SISBID_PCA_lab_files/figure-latex/unnamed-chunk-16-1.pdf}
+
+\hypertarget{pca-lab-using-digits-data}{%
+\section{PCA LAB Using Digits Data}\label{pca-lab-using-digits-data}}
+
+Data set - Digits Data. Either use all digits or choose 2-3 digits if
+computational speed is a problem. Looking at 3's, 8's and 5's are
+interesting.
+
+\hypertarget{problem-1---pca}{%
+\subsection{Problem 1 - PCA}\label{problem-1---pca}}
+
+Problem 1a - Apply PCA to this data.
+
+Problem 1b - Do the first several PCs well separate different digits?
+Why or why not?
+
+Problem 1c - Use the first several PCs and PC loadings to evaluate the
+major patterns in the digits data. Can you come up with a description of
+the pattern found by each of the first five PCs?
+
+Problem 1d - How many PCs are needed to explain 95\% of the variance?
+You must decide how many PCs to retain. Which do you pick and why?
+
+\hypertarget{problem-2---mds}{%
+\subsection{Problem 2 - MDS}\label{problem-2---mds}}
+
+Problem 2a - Apply MDS (classical or non-metric) to this data. Try out
+several distance metrics and different numbers of MDS components.
+
+Problem 2b - Which distance metric is best for this data? Which one
+reveals the most separation of the digits?
+
+Problem 2c - Compare and contrast the MDS component maps to the
+dimension reduction of PCA. Which is preferable?
+
+\hypertarget{problem-3---ica.}{%
+\subsection{Problem 3 - ICA.}\label{problem-3---ica.}}
+
+Problem 3a - Apply ICA to this data set.
+
+Problem 3b - Which value of K did you use? Why? What happens when you
+slightly change your chosen K?
+
+Problem 3c - Interpret the independent image signals found. Do any other
+them accurately reflect the different digits? Which ones?
+
+\hypertarget{problem-4---umap}{%
+\subsection{Problem 4 - UMAP}\label{problem-4---umap}}
+
+Problem 5a - Apply UMAP on this data set.
+
+\hypertarget{problem-5---tsne}{%
+\subsection{Problem 5 - tSNE}\label{problem-5---tsne}}
+
+Problem 5a - Apply tSNE on this data set
+
+\hypertarget{problem-6---comparisons.}{%
+\subsection{Problem 6 - Comparisons.}\label{problem-6---comparisons.}}
+
+Problem 6a - Compare and contrast PCA, MDS and ICA, TSNE, and UMAP on
+this data set. Which one best separates the different digits? Which one
+reveals the most interesting patterns?
+
+Problem 6b - Overall, which method do you recommend for this data set
+and why?
+
+\hypertarget{additional-data-set---nci-microarray-data}{%
+\subsection{Additional Data set - NCI Microarray
+data}\label{additional-data-set---nci-microarray-data}}
+
+(If you have time - take a further look at this data set using various
+methods for dimension reduction. Also you may be interested in trying
+MDS to visualize this data.)
+
+\#\#R scripts to help out with the Dimension Reduction Lab \#Don't peek
+at this if you want to practice coding on your own!!
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(ISLR)}
+\KeywordTok{library}\NormalTok{(ggplot2)}
+\KeywordTok{library}\NormalTok{(tidyr)}
+\end{Highlighting}
+\end{Shaded}
+
+Load in data and visualize
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{#code for digits - ALL}
+\KeywordTok{rm}\NormalTok{(}\DataTypeTok{list=}\KeywordTok{ls}\NormalTok{())}
+\KeywordTok{load}\NormalTok{(}\StringTok{"UnsupL_SISBID_2020.Rdata"}\NormalTok{)}
+
+\CommentTok{#visulaize}
+\KeywordTok{pdf}\NormalTok{(}\StringTok{"temp.pdf"}\NormalTok{)}
+\KeywordTok{par}\NormalTok{(}\DataTypeTok{mfrow=}\KeywordTok{c}\NormalTok{(}\DecValTok{4}\NormalTok{,}\DecValTok{8}\NormalTok{), }\DataTypeTok{mar=}\KeywordTok{c}\NormalTok{(.}\DecValTok{1}\NormalTok{,.}\DecValTok{1}\NormalTok{,.}\DecValTok{1}\NormalTok{,.}\DecValTok{1}\NormalTok{))}
+\ControlFlowTok{for}\NormalTok{(i }\ControlFlowTok{in} \DecValTok{1}\OperatorTok{:}\DecValTok{32}\NormalTok{)\{}
+  \KeywordTok{imagedigit}\NormalTok{(digits[i,])}
+\NormalTok{\}}
+\KeywordTok{dev.off}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## pdf 
+##   2
+\end{verbatim}
+
+\#\#Problem 1 - PCA
+
+PCA - take SVD to get solution don't center and scale to retain
+interpretation as images
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{########Problem 1 - PCA}
+\CommentTok{#PCA - take SVD to get solution}
+\CommentTok{#don't center and scale to retain interpretation as images}
+\NormalTok{svdd =}\StringTok{ }\KeywordTok{svd}\NormalTok{(digits)}
+\NormalTok{U =}\StringTok{ }\NormalTok{svdd}\OperatorTok{$}\NormalTok{u}
+\NormalTok{V =}\StringTok{ }\NormalTok{svdd}\OperatorTok{$}\NormalTok{v }\CommentTok{#PC loadings}
+\NormalTok{D =}\StringTok{ }\NormalTok{svdd}\OperatorTok{$}\NormalTok{d}
+\NormalTok{Z =}\StringTok{ }\NormalTok{digits}\OperatorTok{%*%}\NormalTok{V }\CommentTok{#PCs}
+\end{Highlighting}
+\end{Shaded}
+
+PC scatterplot
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{i =}\StringTok{ }\DecValTok{1}\NormalTok{; j =}\StringTok{ }\DecValTok{3}\NormalTok{;}
+\KeywordTok{par}\NormalTok{(}\DataTypeTok{mfrow=}\KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{), }\DataTypeTok{mar=}\KeywordTok{c}\NormalTok{(}\DecValTok{3}\NormalTok{,}\DecValTok{3}\NormalTok{,}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{))}
+\KeywordTok{plot}\NormalTok{(U[,i],U[,j],}\DataTypeTok{type=}\StringTok{"n"}\NormalTok{, }\DataTypeTok{xlab =} \StringTok{"PC1"}\NormalTok{, }\DataTypeTok{ylab =} \StringTok{"PC2"}\NormalTok{, }\DataTypeTok{main =} \StringTok{"PC Scatterplot of Digits"}\NormalTok{)}
+\KeywordTok{text}\NormalTok{(U[,i],U[,j],}\KeywordTok{rownames}\NormalTok{(digits),}\DataTypeTok{col=}\KeywordTok{rownames}\NormalTok{(digits),}\DataTypeTok{cex=}\NormalTok{.}\DecValTok{7}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{2020_SISBID_PCA_lab_files/figure-latex/unnamed-chunk-20-1.pdf}
+
+PC loadings
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{#PC loadings}
+\KeywordTok{par}\NormalTok{(}\DataTypeTok{mfrow=}\KeywordTok{c}\NormalTok{(}\DecValTok{3}\NormalTok{,}\DecValTok{5}\NormalTok{),}\DataTypeTok{mar=}\KeywordTok{c}\NormalTok{(.}\DecValTok{1}\NormalTok{,.}\DecValTok{1}\NormalTok{,.}\DecValTok{1}\NormalTok{,.}\DecValTok{1}\NormalTok{))}
+\ControlFlowTok{for}\NormalTok{(i }\ControlFlowTok{in} \DecValTok{1}\OperatorTok{:}\DecValTok{15}\NormalTok{)\{}
+  \KeywordTok{imagedigit}\NormalTok{(V[,i])}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{2020_SISBID_PCA_lab_files/figure-latex/unnamed-chunk-21-1.pdf}
+
+Variance Explained
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{#Variance Explained}
+\NormalTok{varex =}\StringTok{ }\DecValTok{0}
+\NormalTok{cumvar =}\StringTok{ }\DecValTok{0}
+\NormalTok{denom =}\StringTok{ }\KeywordTok{sum}\NormalTok{(D}\OperatorTok{^}\DecValTok{2}\NormalTok{)}
+\ControlFlowTok{for}\NormalTok{(i }\ControlFlowTok{in} \DecValTok{1}\OperatorTok{:}\DecValTok{256}\NormalTok{)\{}
+\NormalTok{  varex[i] =}\StringTok{ }\NormalTok{D[i]}\OperatorTok{^}\DecValTok{2}\OperatorTok{/}\NormalTok{denom}
+\NormalTok{  cumvar[i] =}\StringTok{ }\KeywordTok{sum}\NormalTok{(D[}\DecValTok{1}\OperatorTok{:}\NormalTok{i]}\OperatorTok{^}\DecValTok{2}\NormalTok{)}\OperatorTok{/}\NormalTok{denom}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+Screeplot
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{par}\NormalTok{(}\DataTypeTok{mfrow=}\KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{))}
+\KeywordTok{plot}\NormalTok{(}\DecValTok{1}\OperatorTok{:}\DecValTok{256}\NormalTok{,varex,}\DataTypeTok{type=}\StringTok{"l"}\NormalTok{,}\DataTypeTok{lwd=}\DecValTok{2}\NormalTok{,}\DataTypeTok{xlab=}\StringTok{"PC"}\NormalTok{,}\DataTypeTok{ylab=}\StringTok{"% Variance Explained"}\NormalTok{)}
+\KeywordTok{plot}\NormalTok{(}\DecValTok{1}\OperatorTok{:}\DecValTok{256}\NormalTok{,cumvar,}\DataTypeTok{type=}\StringTok{"l"}\NormalTok{,}\DataTypeTok{lwd=}\DecValTok{2}\NormalTok{,}\DataTypeTok{xlab=}\StringTok{"PC"}\NormalTok{,}\DataTypeTok{ylab=}\StringTok{"Cummulative Variance Explained"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{2020_SISBID_PCA_lab_files/figure-latex/unnamed-chunk-23-1.pdf}
+
+Pairs Plot
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(GGally)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Z_sub =}\StringTok{ }\NormalTok{Z[,}\DecValTok{1}\OperatorTok{:}\DecValTok{5}\NormalTok{]}
+\NormalTok{comp_labels<-}\KeywordTok{c}\NormalTok{(}\StringTok{"PC1"}\NormalTok{,}\StringTok{"PC2"}\NormalTok{,}\StringTok{"PC3"}\NormalTok{,}\StringTok{"PC4"}\NormalTok{, }\StringTok{"PC5"}\NormalTok{)}
+\KeywordTok{pairs}\NormalTok{(Z_sub, }\DataTypeTok{labels =}\NormalTok{ comp_labels, }\DataTypeTok{main =} \StringTok{"Pairs of PC's for Digits Data"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{2020_SISBID_PCA_lab_files/figure-latex/unnamed-chunk-25-1.pdf}
+
+\hypertarget{problem-2---mds-1}{%
+\section{Problem 2 - MDS}\label{problem-2---mds-1}}
+
+classical MDS (Note, this may take some time - try only on 3's and 8's)
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{dat38 =}\StringTok{ }\KeywordTok{rbind}\NormalTok{(digits[}\KeywordTok{which}\NormalTok{(}\KeywordTok{rownames}\NormalTok{(digits)}\OperatorTok{==}\DecValTok{3}\NormalTok{),],digits[}\KeywordTok{which}\NormalTok{(}\KeywordTok{rownames}\NormalTok{(digits)}\OperatorTok{==}\DecValTok{8}\NormalTok{),])}
+\KeywordTok{dim}\NormalTok{(dat38)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 1532  256
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{#PCA for comparison}
+\NormalTok{svdd =}\StringTok{ }\KeywordTok{svd}\NormalTok{(dat38)}
+\NormalTok{U =}\StringTok{ }\NormalTok{svdd}\OperatorTok{$}\NormalTok{u}
+\NormalTok{V =}\StringTok{ }\NormalTok{svdd}\OperatorTok{$}\NormalTok{v }\CommentTok{#PC loadings}
+\NormalTok{D =}\StringTok{ }\NormalTok{svdd}\OperatorTok{$}\NormalTok{d}
+\NormalTok{Z =}\StringTok{ }\NormalTok{digits}\OperatorTok{%*%}\NormalTok{V }\CommentTok{#PCs}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{#MDS}
+\NormalTok{Dmat =}\StringTok{ }\KeywordTok{dist}\NormalTok{(dat38,}\DataTypeTok{method=}\StringTok{"maximum"}\NormalTok{) }\CommentTok{#Manhattan (L1) Distance}
+\NormalTok{mdsres =}\StringTok{ }\KeywordTok{cmdscale}\NormalTok{(Dmat,}\DataTypeTok{k=}\DecValTok{10}\NormalTok{)}
+
+\NormalTok{i =}\StringTok{ }\DecValTok{1}\NormalTok{; j =}\StringTok{ }\DecValTok{2}\NormalTok{;}
+\KeywordTok{par}\NormalTok{(}\DataTypeTok{mfrow=}\KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{))}
+\KeywordTok{plot}\NormalTok{(mdsres[,i],mdsres[,j],}\DataTypeTok{type=}\StringTok{"n"}\NormalTok{, }\DataTypeTok{main =} \StringTok{"MDS Using Manhattan Distance"}\NormalTok{)}
+\KeywordTok{text}\NormalTok{(mdsres[,i],mdsres[,j],}\KeywordTok{rownames}\NormalTok{(dat38),}\DataTypeTok{col=}\KeywordTok{rownames}\NormalTok{(dat38))}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{2020_SISBID_PCA_lab_files/figure-latex/unnamed-chunk-27-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{plot}\NormalTok{(U[,i],U[,j],}\DataTypeTok{type=}\StringTok{"n"}\NormalTok{,}\DataTypeTok{xlab=}\StringTok{"PC1"}\NormalTok{,}\DataTypeTok{ylab=}\StringTok{"PC2"}\NormalTok{)}
+\KeywordTok{text}\NormalTok{(U[,i],U[,j],}\KeywordTok{rownames}\NormalTok{(dat38),}\DataTypeTok{col=}\KeywordTok{rownames}\NormalTok{(dat38))}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{2020_SISBID_PCA_lab_files/figure-latex/unnamed-chunk-28-1.pdf}
+
+\hypertarget{problem-3---ica}{%
+\section{Problem 3 - ICA}\label{problem-3---ica}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(fastICA)}
+\KeywordTok{require}\NormalTok{(}\StringTok{"fastICA"}\NormalTok{)}
+
+\NormalTok{K =}\StringTok{ }\DecValTok{20}
+\NormalTok{icafit =}\StringTok{ }\KeywordTok{fastICA}\NormalTok{(}\KeywordTok{t}\NormalTok{(dat38),}\DataTypeTok{n.comp=}\NormalTok{K)}
+
+\CommentTok{#plot independent source signals }
+\KeywordTok{options}\NormalTok{(}\DataTypeTok{width =} \DecValTok{60}\NormalTok{)}
+\KeywordTok{par}\NormalTok{(}\DataTypeTok{mfrow=}\KeywordTok{c}\NormalTok{(}\DecValTok{4}\NormalTok{,}\DecValTok{5}\NormalTok{),}\DataTypeTok{mar =} \KeywordTok{c}\NormalTok{(}\DecValTok{2}\NormalTok{, }\DecValTok{2}\NormalTok{, }\DecValTok{2}\NormalTok{, }\DecValTok{2}\NormalTok{))}
+\ControlFlowTok{for}\NormalTok{(i }\ControlFlowTok{in} \DecValTok{1}\OperatorTok{:}\NormalTok{K)\{}
+  \KeywordTok{imagedigit}\NormalTok{(icafit}\OperatorTok{$}\NormalTok{S[,i])}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{2020_SISBID_PCA_lab_files/figure-latex/unnamed-chunk-29-1.pdf}
+
+\hypertarget{problem-4---umap-1}{%
+\section{Problem 4 - UMAP}\label{problem-4---umap-1}}
+
+Install Packages
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{#install.packages('umap')}
+\CommentTok{#install.packages('Rtsne')}
+\KeywordTok{library}\NormalTok{(umap)}
+\KeywordTok{library}\NormalTok{(Rtsne)}
+\end{Highlighting}
+\end{Shaded}
+
+Run UMAP
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{digits.umap =}\StringTok{ }\KeywordTok{umap}\NormalTok{(dat38)}
+\end{Highlighting}
+\end{Shaded}
+
+Plot UMAP
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{plot}\NormalTok{(digits.umap}\OperatorTok{$}\NormalTok{layout[,}\DecValTok{1}\NormalTok{],}\DataTypeTok{y=}\NormalTok{digits.umap}\OperatorTok{$}\NormalTok{layout[,}\DecValTok{2}\NormalTok{], }\DataTypeTok{type =}\StringTok{'n'}\NormalTok{, }\DataTypeTok{main =} \StringTok{"UMAP on Digits 3,8 "}\NormalTok{, }\DataTypeTok{xlab =} \StringTok{"UMAP1"}\NormalTok{, }\DataTypeTok{ylab =} \StringTok{"UMAP2"}\NormalTok{)}
+\KeywordTok{text}\NormalTok{(digits.umap}\OperatorTok{$}\NormalTok{layout[,}\DecValTok{1}\NormalTok{],}\DataTypeTok{y=}\NormalTok{digits.umap}\OperatorTok{$}\NormalTok{layout[,}\DecValTok{2}\NormalTok{],}\KeywordTok{rownames}\NormalTok{(dat38),}\DataTypeTok{col=}\KeywordTok{rownames}\NormalTok{(dat38),}\DataTypeTok{cex=}\NormalTok{.}\DecValTok{7}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{2020_SISBID_PCA_lab_files/figure-latex/unnamed-chunk-32-1.pdf}
+
+\hypertarget{problem-5---tsne-1}{%
+\section{Problem 5 - tSNE}\label{problem-5---tsne-1}}
+
+Run tSNE
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{tsne_digit <-}\StringTok{ }\KeywordTok{Rtsne}\NormalTok{(}\KeywordTok{as.matrix}\NormalTok{(dat38))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{plot}\NormalTok{(tsne_digit}\OperatorTok{$}\NormalTok{Y[,}\DecValTok{1}\NormalTok{],}\DataTypeTok{y=}\NormalTok{tsne_digit}\OperatorTok{$}\NormalTok{Y[,}\DecValTok{2}\NormalTok{], }\DataTypeTok{type =}\StringTok{'n'}\NormalTok{, }\DataTypeTok{main =} \StringTok{"tSNE on Digits 3,8 "}\NormalTok{, }\DataTypeTok{xlab =} \StringTok{"tSNE1"}\NormalTok{, }\DataTypeTok{ylab =} \StringTok{"tSNE2"}\NormalTok{)}
+\KeywordTok{text}\NormalTok{(tsne_digit}\OperatorTok{$}\NormalTok{Y[,}\DecValTok{1}\NormalTok{],}\DataTypeTok{y=}\NormalTok{tsne_digit}\OperatorTok{$}\NormalTok{Y[,}\DecValTok{2}\NormalTok{],}\KeywordTok{rownames}\NormalTok{(dat38),}\DataTypeTok{col=}\KeywordTok{rownames}\NormalTok{(dat38),}\DataTypeTok{cex=}\NormalTok{.}\DecValTok{7}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{2020_SISBID_PCA_lab_files/figure-latex/unnamed-chunk-34-1.pdf}
+
+\end{document}
